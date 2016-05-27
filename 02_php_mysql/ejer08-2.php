@@ -88,13 +88,12 @@ mysqli_close($conexion);
 
     // Calcular el número de filas
     $total = mysqli_num_rows($r);
-
-    $coment = mysqli_fetch_assoc($r);
+    
 
     // Mostrar el contenido de las filas, creando una tabla XHTML
     if ($total > 0) {
 
-        while ($coment) {
+        while ($coment = mysqli_fetch_assoc($r)) {
             echo "
                 <div>
                     <label for=\"coment\">Comentarios:</label>
@@ -205,38 +204,6 @@ mysqli_close($conexion);
 }
 ?>
 
-
-<?php if (isset($_GET['limpiar'])) { ?>
-    <?php
-// Abrir la conexión
-    $conexion = mysqli_connect("localhost", "root", "root", "blog");
-
-// Borrado, si es que nos pasan un id
-    if (isset($_GET['id'])) {
-        // Borramos los comentarios correspondientes a la entrada
-        $q = "delete from entrada where id='" . $_GET['id'] . "'";
-
-        // Ejecutar la consulta en la conexión abierta. No hay "resultset"
-        mysqli_query($conexion, $q) or die(mysqli_error($conexion));
-
-        // Comprobar si hemos afectado a alguna fila
-        echo "<p class='red'>";
-
-
-    }
-
-    if (mysqli_affected_rows($conexion) > 0)
-        //Muestra el MSG cuando los ha eliminado
-        echo "<script>alert(\"DATOS ELIMINADOS\");</script>";
-    else
-        echo "<script>alert(\"NO SE HA MODIFICADO NINGUNA ENTRADA\");</script>";
-
-    echo "</p>";
-    //Nos lleva a la ventana de la tabla
-    echo  "<script>window.location='ejer08.php';</script>";
-}
-
-?>
 
 <?php if (isset($_GET['borrar'])) { ?>
     <?php
